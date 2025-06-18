@@ -21,7 +21,7 @@
       let frame = document.getElementById("f");
 
       button.onclick = () => {
-        let url = document.getElementById("url");
+        let url = document.getElementById("url").innerText;
         let base = url.split("https://")[1].split("/")[0];
         let path = new URL(url).pathname;
         var p = path.slice(1);
