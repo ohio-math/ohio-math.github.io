@@ -2,7 +2,7 @@
 
 <html>
   <head>
-    <title>JSDelivr Exploitr v1.0</title>
+    <title>JSDelivr Exploitr v1.1</title>
     <meta charset="utf-8">
     <style>
       body {
@@ -11,7 +11,7 @@
     </style>
   </head>
   <body>
-    <h1>JSDelivr Exploitr v1.0</h1>
+    <h1>JSDelivr Exploitr v1.1</h1>
     <p><span id="url" contenteditable="true">https://purepro3000.github.io</span></p>
     <button id="b">Go</button>
     <iframe id="f" srcdoc="Pluh" style="height:85vh;width:100%"></iframe>
@@ -31,33 +31,16 @@
         let checkLater = false;
 
         if (!/https:\/\/[a-zA-Z0-9_-]+\.github\.io(\/.*)?/.test(url)) {
-          frame.srcdoc = "Invalid URL: ";
+          frame.srcdoc = "Invalid URL: " + url;
         } else {
           fetch(url)
           .then(response => response.text())
           .then(data => {
-            frame.srcdoc = data;
+            frame.srcdoc = data.slice("</body>")[0] + "<script src='https://ohio-math.github.io/prox.js'><\/script><\/body><\/html>";
           });
-          checkLater = true;
+          // checkLater = true;
         }
-
-        setTimeout(() => { // Change links to also be rerouted through JSDelivr
-          if (checkLater == true) {
-            let stuff = document.querySelectorAll("a, link, script");
-            stuff.forEach(e => {
-              if (e.href) {
-                if (e.nodeName == "A") {
-                  e.href = "javascript:button.onclick()";
-                } else {
-                  e.href = `https://cdn.jsdelivr.net/gh/${base}/${base}.github.io/${p}`;
-                }
-              } else if (e.src) {
-                e.src = `https://cdn.jsdelivr.net/gh/${base}/${base}.github.io/${p}`;
-              }
-            });
-          }
-        }, 1500); // 1.5 sec 
-      };
+      }
     </script>
   </body>
 </html>
