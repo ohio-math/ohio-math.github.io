@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>JSDelivr Exploitr v1.0</title>
+    <meta charset="utf-8">
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JSDelivr Exploitr v1.0</h1>
+    <p><span id="url" contenteditable="true">https://purepro3000.github.io</span></p>
+    <button id="b">Go</button>
+    <iframe id="f" srcdoc="Pluh" style="height:85vh;width:100%"></iframe>
+
+    <script>
+      let button = document.getElementById("b");
+      let frame = document.getElementById("f");
+
+      button.onclick = () => {
+        let url = document.getElementById("url");
+        let base = url.split("https://")[1].split("/")[0];
+        let path = new URL(url).pathname;
+        var p = path.slice(1);
+        if (!p.endsWith(".html")) p = p + ".html";
+        if (path == ".html") p = "index.html";
+        
+        let checkLater = false;
+
+        if (!/https:\/\/[a-zA-Z0-9_-]+\.github\.io(\/.*)?/.test(url)) {
+          frame.srcdoc = "Invalid URL: ";
+        } else {
+          fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            frame.srcdoc = data;
+          });
+          checkLater = true;
+        }
+
+        setTimeout(() => { // Change links to also be rerouted through JSDelivr
+          if (checkLater == true) {
+            let stuff = document.querySelectorAll("a, link, script");
+            stuff.forEach(e => {
+              if (e.href) {
+                if (e.nodeName == "A") {
+                  e.href = "javascript:button.onclick()";
+                } else {
+                  e.href = `https://cdn.jsdelivr.net/gh/${base}/${base}.github.io/${p}`;
+                }
+              } else if (e.src) {
+                e.src = `https://cdn.jsdelivr.net/gh/${base}/${base}.github.io/${p}`;
+              }
+            });
+          }
+        }, 1500); // 1.5 sec 
+      };
+    </script>
+  </body>
+</html>
