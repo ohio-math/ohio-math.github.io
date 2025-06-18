@@ -36,7 +36,7 @@
           fetch(url)
           .then(response => response.text())
           .then(data => {
-            frame.srcdoc = data.slice("</body>")[0] + `<script>let url = ${url}; let base = ${base}; let path = ${path};<\/script><script src='https://ohio-math.github.io/prox.js'<\/script><\/body><\/html>`;
+            frame.srcdoc = data;
           });
           // checkLater = true;
         }
