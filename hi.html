@@ -7,7 +7,7 @@
   </head>
   <body>
     <embed id="embed" src="papasburgeria.swf">              
-    <script>const params = new URLSearchParams(window.location.search); document.getElementById("embed").src = params.get("feature");</script>
+    <script>const params = new URLSearchParams(window.location.search); let game = params.get("feature");  document.getElementById("embed").src = (feature != null) ? feature : "papasburgeria.swf"</script>
     <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.1.0-nightly.2025.3.25/ruffle.min.js"></script>
   </body>
 </html>
