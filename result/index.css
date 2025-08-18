@@ -1,0 +1,13 @@
+#canvas {
+    background-color: white;
+    width: auto;
+    height: 100vh;
+    aspect-ratio: 4 / 3;
+    display: block;
+    margin: 0 auto;
+}
+
+body {
+    margin: 0;
+    background-color: black;
+}
