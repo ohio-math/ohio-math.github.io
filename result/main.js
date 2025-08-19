@@ -4,6 +4,38 @@ import { Sprite_Barrier } from './scripts/Sprite_Barrier.js';
 import { Sprite_Fuel } from './scripts/Sprite_Fuel.js';
 import { Sprite_Text } from './scripts/Sprite_Text.js';
 
+function wait(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
+}
+
+async function load() {
+  sprites.forEach(sprite => {
+    sprite.costumes.forEach(costume => {
+        fetch(costume.filename)
+        .then(response => response.text)
+        .then(data => {
+            sprite.rawCostumeData.push(data);
+            assetsLoaded ++;
+            bar.value = bar.value + 1;
+            await wait(30);
+        });
+    });    
+
+    sprite.sounds.forEach(sound => {
+        fetch(sound.filename)
+        .then(response => response.text)
+        .then(data => {
+            sprite.rawSoundData.push(data);
+            assetsLoaded ++;
+            bar.value = bar.value + 1;
+            await wait(30);
+        });
+    });    
+});
+}
+
 var sprites = [
   new Stage({ costume: 1 }),
   new Sprite_BountyHunter({ x: -60, y: -181.79999999999995, costume: 3, direction: 90, size: 50, rotation_style: "all around", visible: false }),
@@ -17,28 +49,9 @@ let bar = document.getElementById("bar");
 let container = document.getElementById("container");
 let canvas = document.getElementById("canvas");
 // let totalAssets = 15;
+load();
 
-sprites.forEach(sprite => {
-    sprite.costumes.forEach(costume => {
-        fetch(costume.filename)
-        .then(response => response.text)
-        .then(data => {
-            sprite.rawCostumeData.push(data);
-            assetsLoaded ++;
-            bar.value = bar.value + 1;
-        });
-    });    
 
-    sprite.sounds.forEach(sound => {
-        fetch(sound.filename)
-        .then(response => response.text)
-        .then(data => {
-            sprite.rawSoundData.push(data);
-            assetsLoaded ++;
-            bar.value = bar.value + 1;
-        });
-    });    
-});
 
 container.remove();
 canvas.style.display = "block";
